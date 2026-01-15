@@ -74,12 +74,24 @@ collaborative_ecommerce/
 
 ## **Git Workflow Rules**
 - Pull from main
-- Create a feature branch
+- Create a feature branch with the pattern
+> feature/"feature-name" 
 - Work only on your feature
 - Commit frequently with clear messages
 - Open a Pull Request (PR) to main
 - Wait for review before merge
-- **No direct push to main !!!**
+- **No direct push to main !!!** 
+
+**Typical work/push example**
+```
+git checkout main
+git pull origin main
+git checkout -b feature/product-create
+# work... then when it comes to push 
+git add .
+git commit -m "Add product creation endpoint"
+git push origin feature/product-create
+```
 
 ## **Local Development Setup**
 1. _Clone the project_
