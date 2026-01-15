@@ -76,7 +76,7 @@ collaborative_ecommerce/
 ## **Git Workflow Rules**
 - Pull from main
 - Create a feature branch with the pattern
-> feature/"feature-name" 
+> trainee-name/"feature-name" 
 - Work only on your feature
 - Commit frequently with clear messages
 - Open a Pull Request (PR) to main
@@ -87,7 +87,7 @@ collaborative_ecommerce/
 ```
 git checkout main
 git pull origin main
-git checkout -b feature/product-create
+git checkout -b cedric/product-create
 # work... then when it comes to push 
 git add .
 git commit -m "Add product creation endpoint"
