@@ -21,6 +21,7 @@ collaborative_ecommerce/
 ├── accounts/          # Authentication & user profiles
 │   ├── models.py
 │   ├── serializers.py
+│   ├── permissions.py
 │   ├── views.py
 │   ├── urls.py
 │
