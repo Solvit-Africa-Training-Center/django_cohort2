@@ -37,15 +37,15 @@ collaborative_ecommerce/
 │   ├── views.py
 │
 ├── payment/           # Orders payments (future implementation)
-├── static/
+├── static/            # Data Files
 │
 ├── collaborative_ecommerce/  # Project settings
 │   ├── settings.py
-│   ├── urls.py
+│   ├── urls.py               # URLs Routing
 │
-├── .env.example       # Environment variables template
+├── .env                     # Environment variables 
 ├── .gitignore
-├── requirements.txt
+├── requirements.txt        # Dependencies
 └── manage.py
  ```
 
