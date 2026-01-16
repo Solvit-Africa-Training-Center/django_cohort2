@@ -26,8 +26,17 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 # Buyer registration
-
 class BuyerRegisterSerializer(RegisterSerializer):
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+
+        if not attrs.get("first_name") or not attrs.get("last_name"):
+            raise serializers.ValidationError(
+                "Buyers must provide first name and last name"
+            )
+
+        return attrs
 
     def create(self, validated_data):
         validated_data.pop("re_password")
@@ -37,12 +46,9 @@ class BuyerRegisterSerializer(RegisterSerializer):
             **validated_data
         )
         return user
-
 # Seller registration
-
-
 class SellerRegisterSerializer(RegisterSerializer):
-    shop_name = serializers.CharField()
+    shop_name = serializers.CharField(required=True)
     shop_description = serializers.CharField(required=False, allow_blank=True)
 
     class Meta(RegisterSerializer.Meta):
@@ -50,6 +56,16 @@ class SellerRegisterSerializer(RegisterSerializer):
             "shop_name",
             "shop_description",
         )
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+
+        if not attrs.get("shop_name"):
+            raise serializers.ValidationError(
+                "Sellers must provide a shop name"
+            )
+
+        return attrs
 
     @transaction.atomic
     def create(self, validated_data):
@@ -69,6 +85,7 @@ class SellerRegisterSerializer(RegisterSerializer):
         )
 
         return user
+
 
 # class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
