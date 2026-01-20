@@ -17,8 +17,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-env=environ.Env(DEBUG=(bool,False))
-environ.Env.read_env(os.path.join(BASE_DIR,'.env'))
+env = environ.Env(DEBUG=(bool, False))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts'
+    'accounts',
+    'products'
 ]
 
 MIDDLEWARE = [
@@ -76,14 +77,14 @@ WSGI_APPLICATION = 'collaborative_ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES={
-    'default':{
-        'ENGINE':'django.db.backends.postgresql',
-        'NAME':env("DEV_DB_NAME"),
-        'USER':env("DEV_DB_USER"),
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env("DEV_DB_NAME"),
+        'USER': env("DEV_DB_USER"),
         'PASSWORD': env("DEV_DB_PASSWORD"),
-        'HOST':'localhost',
-        'PORT':5432
+        'HOST': 'localhost',
+        'PORT': 5432
     }
 }
 
