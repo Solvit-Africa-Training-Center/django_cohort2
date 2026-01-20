@@ -1,17 +1,19 @@
 from rest_framework import serializers
 from .models import Category, SubCategory, Product, ProductImage, Feedback
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ['id', 'name', 'image_url', 'is_active', 'created_at', 'updated_at']
-
 class SubCategorySerializer(serializers.ModelSerializer):
     category_name = serializers.ReadOnlyField(source='category.name')
 
     class Meta:
         model = SubCategory
         fields = ['id', 'category', 'category_name', 'name', 'is_active', 'created_at', 'updated_at']
+
+class CategorySerializer(serializers.ModelSerializer):
+    subcategories = SubCategorySerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ['id', 'name', 'image_url', 'is_active', 'created_at', 'updated_at', 'subcategories']
 
 class ProductSerializer(serializers.ModelSerializer):
     sub_category_name = serializers.ReadOnlyField(source='sub_category.name')
@@ -28,7 +30,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ['id', 'product', 'file', 'created_at', 'updated_at']
+        fields = ['id', 'product', 'image', 'created_at', 'updated_at']
 
 class FeedbackSerializer(serializers.ModelSerializer):
     user_username = serializers.ReadOnlyField(source='user.username')
