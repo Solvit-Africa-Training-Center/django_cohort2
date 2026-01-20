@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from django.db import transaction
-from .models import User, Role
-
-
-# ==================================================
-# BASE REGISTER SERIALIZER
-# ==================================================
+from .models import User, Role, Address
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -30,7 +24,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             "phone_number",
             "password",
             "re_password",
-            # address fields
             "country",
             "province",
             "district",
@@ -40,6 +33,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             "street",
             "description",
         )
+        extra_kwargs = {
+            "password": {"write_only": True},
+            "re_password": {"write_only": True},
+        }
 
     def validate(self, attrs):
         if attrs["password"] != attrs["re_password"]:
@@ -47,67 +44,66 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
 
-# BUYER RegisterSerializer
-
-from .models import Address
+# BUYER
 
 class BuyerRegisterSerializer(RegisterSerializer):
-    @transaction.atomic
+
     def create(self, validated_data):
         validated_data.pop("re_password")
 
         # Extract address fields
-        address_data = {
-            key: validated_data.pop(key, "")
-            for key in [
-                "country", "province", "district", "sector", "cell",
-                "village", "street", "description"
-            ]
-        }
+        address_fields = [
+            "country", "province", "district", "sector",
+            "cell", "village", "street", "description"
+        ]
+
+        address_data = {}
+        for field in address_fields:
+            address_data[field] = validated_data.pop(field, "")
 
         buyer_role, _ = Role.objects.get_or_create(name=Role.BUYER)
 
-        # Create user
+        # Create buyer user
         user = User.objects.create_user(
             role=buyer_role,
             **validated_data
         )
 
-        # Create address if at least one field is filled
+        # Create address only if at least one value exists
         if any(address_data.values()):
             Address.objects.create(user=user, **address_data)
 
         return user
 
-    
-# SELLER RegisterSerializer
+
+# SELLER:
+
 
 
 class SellerRegisterSerializer(RegisterSerializer):
-    @transaction.atomic
+
     def create(self, validated_data):
         validated_data.pop("re_password")
 
-        # Extract address fields
-        address_data = {
-            key: validated_data.pop(key, "")
-            for key in [
-                "country", "province", "district", "sector", "cell",
-                "village", "street", "description"
-            ]
-        }
+        address_fields = [
+            "country", "province", "district", "sector",
+            "cell", "village", "street", "description"
+        ]
+
+        address_data = {}
+        for field in address_fields:
+            address_data[field] = validated_data.pop(field, "")
 
         seller_role, _ = Role.objects.get_or_create(name=Role.SELLER)
 
-        # Create user
+        # Create seller user
         user = User.objects.create_user(
             role=seller_role,
             **validated_data
         )
 
-        # Create address if any fields provided
         if any(address_data.values()):
             Address.objects.create(user=user, **address_data)
 
         return user
-
+    
