@@ -105,5 +105,5 @@ class SellerRegisterSerializer(RegisterSerializer):
         if any(address_data.values()):
             Address.objects.create(user=user, **address_data)
 
-        return user
+        return user 
     

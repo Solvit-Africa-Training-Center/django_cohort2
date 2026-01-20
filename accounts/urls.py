@@ -7,4 +7,4 @@ router.register("", AuthViewSet, basename="auth")
 
 urlpatterns = [
     path("", include(router.urls)),
-]
+] 
