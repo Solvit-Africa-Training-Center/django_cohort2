@@ -1,7 +1,8 @@
 
 from django.db import models
-from product.models import Product
-
+from products.models import Product
+from accounts.models import User
+import uuid
 import datetime
 
 class Cart(models.Model):
@@ -9,7 +10,7 @@ class Cart(models.Model):
         ('active','Active'),
         ('completed','Completed')
     ]
-    id = models.UUIDField(primary_key=True, default=models.uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='cart')
     session_id = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(max_length=20,choices=STATUS_CHOICES, default='active')
