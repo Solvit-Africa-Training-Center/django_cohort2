@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'products',
-    'drf_yasg',
+    'cart',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
