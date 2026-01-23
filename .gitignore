@@ -209,6 +209,3 @@ __marimo__/
 
 .DS_Store
 accounts/.DS_Store
-products/migrations/0001_initial.py
-media/
-0001_initial.py
