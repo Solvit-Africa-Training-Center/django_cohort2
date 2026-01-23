@@ -25,7 +25,6 @@ class SubCategory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name='subcategories')
-
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -58,12 +57,12 @@ class Product(models.Model):
         return self.name
 
 
+
 class ProductImage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='images')
-    # Assuming URL or path string as per diagram 'varchar'
-    image_url = models.CharField(max_length=255)
+    image_url = models.ImageField(upload_to='product_images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
