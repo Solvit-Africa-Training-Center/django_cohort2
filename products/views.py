@@ -51,7 +51,7 @@ class SubCategoryViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
 
-class ProductViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class ProductViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -78,6 +78,22 @@ class ProductViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     )
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_description="Update an existing product.",
+        request_body=ProductSerializer,
+        responses={200: ProductSerializer}
+    )
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+
+    @swagger_auto_schema(
+        operation_description="Partially update an existing product.",
+        request_body=ProductSerializer,
+        responses={200: ProductSerializer}
+    )
+    def partial_update(self, request, *args, **kwargs):
+        return super().partial_update(request, *args, **kwargs)
 
 
 class ProductImageViewSet(viewsets.ModelViewSet):
