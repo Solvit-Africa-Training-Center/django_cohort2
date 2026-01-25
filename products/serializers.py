@@ -61,4 +61,16 @@ class ProductSerializer(serializers.ModelSerializer):
             product.save()
         return product
     
+    def update(self, instance, validated_data):
+        # Update only the allowed fields
+        instance.name = validated_data.get('name', instance.name)
+        instance.description = validated_data.get('description', instance.description)
+        instance.price = validated_data.get('price', instance.price)
+        instance.discount_price = validated_data.get('discount_price', instance.discount_price)
+        instance.is_available_inStock = validated_data.get('is_available_inStock', instance.is_available_inStock)
+        instance.publish = validated_data.get('publish', instance.publish)
+        instance.rating = validated_data.get('rating', instance.rating)
+        instance.save()
+        return instance
+
     
